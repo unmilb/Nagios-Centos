@@ -1,0 +1,21 @@
+- name: install Redhat/Centos dependencies packages
+  action: >
+    {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
+  with_items:
+    - httpd
+    - gcc
+    - glibc
+    - glibc-common
+    - gd
+    - gd-devel
+    - make
+    - net-snmp
+    - php
+    - tree
+    - unzip
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+
+- include: server-rhel.yml
+
+

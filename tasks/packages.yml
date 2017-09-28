@@ -1,0 +1,36 @@
+- name: install Ubuntu/Desbian dependencies packages
+  action: >
+    {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
+  with_items:
+    - vim
+    - wget 
+    - build-essential 
+    - apache2 
+    - php 
+    - apache2-mod-php7.0 
+    - php-gd 
+    - libgd-dev 
+    - sendmail 
+    - unzip	
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+
+- name: install Redhat/Centos dependencies packages
+  action: >
+    {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
+  with_items:
+    - httpd
+    - gcc 
+    - glibc 
+    - glibc-common 
+    - gd 
+    - gd-devel 
+    - make 
+    - net-snmp
+    - php
+    - tree
+    - unzip
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+
+- include: server-rhel.yml

@@ -1,0 +1,23 @@
+---
+ - name: Download Nagios Core 4 tar
+   unarchive:
+    src: "{{ core_package_tar }}"
+    dest: "{{ temp }}"
+    remote_src: True
+
+ - name: Download and extract Nagios plugin
+   unarchive:
+    src: "{{ plugins_package_tar }}"
+    dest: "{{ temp }}"
+    remote_src: True
+
+
+
+
+
+
+
+
+
+
+#https://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz

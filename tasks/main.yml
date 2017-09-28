@@ -1,0 +1,8 @@
+---
+ - include: server-ubuntu.yml
+   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+ - include: rhel-packages.yml
+   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+# - include: packages.yml

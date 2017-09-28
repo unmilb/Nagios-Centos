@@ -1,0 +1,13 @@
+---
+
+core_package_tar: https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.3.2.tar.gz
+temp: /tmp/
+nagios: nagios-4.3.2
+nagdir: /tmp/nagios-4.3.2/
+
+plugins_package_tar: https://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz
+plugins: nagios-plugins-2.2.1
+plugdir: /tmp/nagios-plugins-2.2.1/
+nagcmd: nagcmd
+nagios: nagios
+nagiosgroup: nagios

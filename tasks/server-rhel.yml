@@ -1,0 +1,62 @@
+---
+#- include: packages.yml
+
+- group:
+    name: "{{ nagcmd }}"
+    state: present
+
+- group:
+    name: "{{ nagiosgroup }}"
+    state: present
+
+- user:
+    name: "{{ nagios }}"
+    state: present
+
+- user:
+    name: "{{ nagios }}"
+    group: "{{ nagcmd }}"
+
+- include: nagios-packages
+
+#- name: Compile Nagios Package 
+#  become: yes
+#  command: 'cd /tmp/nagios-4.3.2 && ./configure --with-command-group=nagcmd'
+#
+#- name: Go to the folder and execute command
+#  command: chdir=/opt/tools/temp ls
+
+
+- name: Compiling Nagios
+  command: chdir={{ nagdir }} {{ item }}
+  with_items:
+     - cd /tmp/nagios-4.3.2/
+     - ./configure --with-command-group=nagcmd
+     - make all
+     - make install
+     - make install-init
+     - make install-config
+     - make install-commandmode
+     - make install-webconf
+
+
+- htpasswd:
+    path: /etc/nagios/etc/htpasswd.users
+    name: nagiosadmin
+    password: 'nagiosadmin'
+
+- name: Compile Plugins Package
+  become: yes
+  command: chdir={{ plugdir }} {{ item }}
+  with_items: 
+   - ./configure  --with-nagios-user=nagios --with-nagios-group=nagios --with-openssl
+   - make all
+   - make install
+
+- service: 
+    name: nagios
+    state: restarted
+
+- service: 
+    name: httpd
+    state: restarted
